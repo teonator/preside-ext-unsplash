@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form i18nBaseUri="page-types.unsplash:">
+	<tab id="main">
+		<fieldset id="main">
+		</fieldset>
+	</tab>
+
+	<tab id="unsplash">
+		<fieldset id="unsplash">
+			<field binding="unsplash.cover_image" control="unsplash" />
+		</fieldset>
+	</tab>
+</form>
