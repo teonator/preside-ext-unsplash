@@ -34,7 +34,7 @@ var app = new Vue({
 			var self = this;
 
 			new PresideIframeModal(
-				  "http://127.0.0.1:41200/admin/unsplash/gallery/"
+				  "http://127.0.0.1:41200/formcontrols/unsplashPicker/gallery/"
 				, "100%"
 				, "100%"
 				, {

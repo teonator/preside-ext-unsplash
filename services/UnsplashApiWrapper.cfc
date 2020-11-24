@@ -1,28 +1,12 @@
+/**
+ * @singleton      true
+ * @presideService true
+ *
+ */
 component {
 
-	public void function index( event, rc, prc, args={} ) {
-		var photos  = arrayNew();
-		var keyword = rc.keyword ?: "";
-		var page    = rc.page    ?: 1;
-		var uri     = keyword.len() ? "search/photos" : "photos";
-
-		photos = call(
-			  uri    = uri
-			, params = {
-				  query    = keyword
-				, page     = page
-				, per_page = 12
-			}
-		);
-
-		event.renderData( type="JSON", data=photos );
-	}
-
-	public string function gallery( event, rc, prc, args={} ) {
-		event.setXFrameOptionsHeader( "" );
-
-		event.setLayout( "adminModalDialog" );
-		event.setView( "admin/unsplash/gallery" );
+	public any function init() {
+		return this;
 	}
 
 	public any function call(
@@ -33,33 +17,31 @@ component {
 	) {
 		var apiUrl       = "https://api.unsplash.com/" & arguments.uri
 		var apiResult    = structNew();
-		var apiAccessKey = getSystemSetting( "unsplash", "accessKey" );
+		var apiAccessKey = $getPresideSetting( "unsplash", "accessKey", "" );
 		var apiParams    = "";
 
-		for ( var key in arguments.params ) {
-			apiParams = listAppend( apiParams, "#key#=#arguments.params[ key ]#", "&" );
-		}
-
-		if ( apiParams.len() ) {
-			apiUrl = "#apiUrl#?#apiParams#";
-		}
-
 		try {
+			if ( !apiAccessKey.len() ) {
+				throw( "Unsplash API key is required", "unsplash.api.key.invalid" );
+			}
+
+			for ( var key in arguments.params ) {
+				apiParams = listAppend( apiParams, "#key#=#arguments.params[ key ]#", "&" );
+			}
+
+			if ( apiParams.len() ) {
+				apiUrl = "#apiUrl#?#apiParams#";
+			}
+
 			http url=apiUrl method=arguments.method result="apiResult" timeout=30 {
 				httpparam type="header" name="Authorization" value="Client-ID #apiAccessKey#";
-				// httpparam type="header" name="Content-Type"  value="application/json";
-
-				// for ( var key in arguments.params ) {
-				// 	httpparam type=paramType name=key value=arguments.params[ key ];
-				// }
 
 				if ( len( trim( arguments.body ) ) ) {
 					httpparam type="body" value=arguments.body;
 				}
 			}
 		} catch( any e ) {
-			// $raiseError( e );
-			writeDump( e );
+			$raiseError( e );
 		}
 
 		return _processResult( result=apiResult );
@@ -76,10 +58,6 @@ component {
 				throw( "Unexpected response from API call: #errorDetail#", "unsplash.api.bad.response", content );
 			}
 
-			// if( code < 200 && code > 299 ) {
-
-			// }
-
 			var deserializedResult = deserializeJson( content );
 
 			if ( isArray( deserializedResult ) ) {
@@ -88,8 +66,7 @@ component {
 				processedResult = deserializedResult.results;
 			}
 		} catch( any e ) {
-			// $raiseError( e );
-			writeDump( e );
+			$raiseError( e );
 		}
 
 		return _formatResult( processedResult );

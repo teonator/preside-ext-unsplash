@@ -7,7 +7,7 @@
 
 	<tab id="unsplash">
 		<fieldset id="unsplash">
-			<field binding="unsplash.cover_image" control="unsplash" />
+			<field binding="unsplash.cover_image" control="unsplashPicker" />
 		</fieldset>
 	</tab>
 </form>
