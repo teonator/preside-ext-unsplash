@@ -10,6 +10,7 @@
 	event
 		.include( "vuejs" )
 		.include( "tailwind" )
+		.include( "unsplashStyle" )
 		.include( "unsplashFormControl" )
 	;
 </cfscript>
@@ -25,7 +26,10 @@
 				</div>
 			</div>
 
-			<img v-if="selectedPhotoUrl" v-bind:src="selectedPhotoUrl" class="object-cover h-full w-full rounded-md mb-6 bg-gray-300 cursor-default">
+			<img
+				v-if="selectedPhotoUrl"
+				v-bind:src="selectedPhotoUrl"
+				class="object-cover h-full w-full rounded-md mb-6 bg-gray-300 cursor-default">
 
 			<div v-else class="self-center text-xl">Select a photo</div>
 		</div>

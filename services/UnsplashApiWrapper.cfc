@@ -1,7 +1,6 @@
 /**
  * @singleton      true
  * @presideService true
- *
  */
 component {
 
