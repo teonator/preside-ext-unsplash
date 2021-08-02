@@ -1,0 +1,21 @@
+{
+    "name":"Preside Extension: Unsplash",
+    "type":"preside-extensions",
+    "version":"0.2.0",
+    "homepage":"",
+    "documentation":"",
+    "location":"",
+    "private":false,
+    "author":"Teon Ooi",
+    "directory":"application/extensions",
+    "repository":{
+        "type":"git",
+        "URL":"https://github.com/teonator/preside-ext-unsplash"
+    },
+    "slug":"preside-ext-unsplash",
+    "ignore":[
+        ".git/*",
+        ".gitignore",
+        ".twgit_features_subject"
+    ]
+}
